@@ -1,0 +1,16 @@
+# Diagram markup for https://www.websequencediagrams.com/
+
+note over browser:
+event handler creates note with date,
+updates rendering of notes,
+and sends new note to server
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa\nPayload: {"content":"example note","date":"2022-05-28T12:38:05.940Z"}
+
+note over server:
+validates note,
+adds note to notes array
+end note
+
+server-->browser: Confirms message was created via JSON data: {"message":"note created"}

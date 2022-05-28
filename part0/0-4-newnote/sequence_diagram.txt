@@ -1,0 +1,37 @@
+# Diagram markup for https://www.websequencediagrams.com/
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note\nPayload: {note: "example note"}
+
+note over server:
+server creates a note with date 
+and adds it to notes array
+end note
+
+server-->browser: HTTP status code 302: URL redirect to /exampleapp/notes
+
+note over browser:
+browser makes new
+request per redirect
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML-code
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [..., { content: "example note", date: "2022-05-28" }]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
