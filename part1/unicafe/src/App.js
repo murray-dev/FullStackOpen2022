@@ -1,3 +1,4 @@
+import { getActiveElement } from "@testing-library/user-event/dist/utils";
 import { useState } from "react";
 
 const Button = ({ text, onClick }) =>
@@ -12,11 +13,20 @@ const GetFeedback = ({ handleGoodClick, handleNeutralClick, handleBadClick }) =>
   </>
 );
 
-// Note: already did exercise 1.8 as part of 1.7
 const DisplayStatistics = ({ good, neutral, bad }) => {
+
   const all = good + neutral + bad;
   const average = (good - bad) / all || 0;
   const positive = (good / all) * 100 || 0;
+
+  if (all === 0) {
+    return (
+      <>
+        <h1>statistics</h1>
+        <p>No feedback given</p>
+      </>
+    );
+  }
 
   return (
     <>
