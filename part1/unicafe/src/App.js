@@ -1,6 +1,6 @@
-import { getActiveElement } from "@testing-library/user-event/dist/utils";
 import { useState } from "react";
 
+// Already defined in previous exercises
 const Button = ({ text, onClick }) =>
   <button onClick={onClick}>{text}</button>;
 
@@ -41,6 +41,7 @@ const DisplayStatistics = ({ good, neutral, bad }) => {
   );
 }
 
+// Already defined in previous exercises
 const Statistic = ({ name, value, unit }) => <p>{name} {value} {unit}</p>;
 
 const App = () => {
