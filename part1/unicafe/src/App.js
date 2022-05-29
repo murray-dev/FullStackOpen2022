@@ -12,6 +12,7 @@ const GetFeedback = ({ handleGoodClick, handleNeutralClick, handleBadClick }) =>
   </>
 );
 
+// Note: already did exercise 1.8 as part of 1.7
 const DisplayStatistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad;
   const average = (good - bad) / all || 0;
@@ -29,7 +30,6 @@ const DisplayStatistics = ({ good, neutral, bad }) => {
     </>
   );
 }
-
 
 const Statistic = ({ name, value, unit }) => <p>{name} {value} {unit}</p>;
 
