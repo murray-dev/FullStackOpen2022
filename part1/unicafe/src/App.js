@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// Already defined in previous exercises
 const Button = ({ text, onClick }) =>
   <button onClick={onClick}>{text}</button>;
 
@@ -31,18 +30,26 @@ const DisplayStatistics = ({ good, neutral, bad }) => {
   return (
     <>
       <h1>statistics</h1>
-      <Statistic name="good" value={good} />
-      <Statistic name="neutral" value={neutral} />
-      <Statistic name="bad" value={bad} />
-      <Statistic name="all" value={all} />
-      <Statistic name="average" value={average} />
-      <Statistic name="positive" value={positive} unit="%" />
+      <table>
+        <tbody>
+          <Statistic name="good" value={good} />
+          <Statistic name="neutral" value={neutral} />
+          <Statistic name="bad" value={bad} />
+          <Statistic name="all" value={all} />
+          <Statistic name="average" value={average} />
+          <Statistic name="positive" value={positive} unit="%" />
+        </tbody>
+      </table>
     </>
   );
 }
 
-// Already defined in previous exercises
-const Statistic = ({ name, value, unit }) => <p>{name} {value} {unit}</p>;
+const Statistic = ({ name, value, unit }) => (
+  <tr>
+    <td>{name}</td>
+    <td>{value} {unit}</td>
+  </tr>
+);
 
 const App = () => {
 
