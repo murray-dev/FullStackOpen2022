@@ -11,28 +11,58 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ]
 
-  const [selected, setSelected] = useState(0)
+  const getRandomAnecdoteIndex = () => Math.floor(Math.random() * anecdotes.length);
+
+  const [selected, setSelected] = useState(getRandomAnecdoteIndex())
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
 
-  const getRandomAnecdote = () => {
-    const randomIndex = Math.floor(Math.random() * anecdotes.length);
-    setSelected(randomIndex);
-  }
+  const handleNextAnecdote = () => setSelected(getRandomAnecdoteIndex());
 
-  const voteForAnecdote = () => {
+  const handleVote = () => {
     const updatedVotes = [...votes];
     updatedVotes[selected] += 1;
     setVotes(updatedVotes);
-  }
+  };
+
+  const indexOfMaxVotes = votes.indexOf(Math.max(...votes));
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes</p>
-      <button onClick={voteForAnecdote}>vote</button>
-      <button onClick={getRandomAnecdote}>next anecdote</button>
+      <Anecdotes
+        anecdote={anecdotes[selected]}
+        numberOfVotes={votes[selected]}
+        handleVote={handleVote}
+        handleNextAnecdote={handleNextAnecdote}
+      />
+      <MostVotedAnecdote
+        anecdote={anecdotes[indexOfMaxVotes]}
+        numberOfVotes={votes[indexOfMaxVotes]}
+      />
     </div>
-  )
+  );
 }
+
+const Anecdotes = ({ anecdote, numberOfVotes, handleVote, handleNextAnecdote }) => (
+  <>
+    <h1>Anecdote of the day</h1>
+    <Anecdote anecdote={anecdote} numberOfVotes={numberOfVotes} />
+    <button onClick={handleVote}>vote</button>
+    <button onClick={handleNextAnecdote}>next anecdote</button>
+  </>
+);
+
+const Anecdote = ({ anecdote, numberOfVotes }) => (
+  <>
+    <p>{anecdote}</p>
+    <p>has {numberOfVotes} votes</p>
+  </>
+)
+
+const MostVotedAnecdote = ({ anecdote, numberOfVotes }) => (
+  <>
+    <h1>Anecdote with most votes</h1>
+    <Anecdote anecdote={anecdote} numberOfVotes={numberOfVotes} />
+  </>
+);
 
 export default App
