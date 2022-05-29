@@ -12,17 +12,26 @@ const GetFeedback = ({ handleGoodClick, handleNeutralClick, handleBadClick }) =>
   </>
 );
 
-const DisplayStatistics = ({ good, neutral, bad }) => (
-  <>
-    <h1>statistics</h1>
-    <Statistic name="good" value={good} />
-    <Statistic name="neutral" value={neutral} />
-    <Statistic name="bad" value={bad} />
-  </>
-);
+const DisplayStatistics = ({ good, neutral, bad }) => {
+  const all = good + neutral + bad;
+  const average = (good - bad) / all || 0;
+  const positive = (good / all) * 100 || 0;
+
+  return (
+    <>
+      <h1>statistics</h1>
+      <Statistic name="good" value={good} />
+      <Statistic name="neutral" value={neutral} />
+      <Statistic name="bad" value={bad} />
+      <Statistic name="all" value={all} />
+      <Statistic name="average" value={average} />
+      <Statistic name="positive" value={positive} unit="%" />
+    </>
+  );
+}
 
 
-const Statistic = ({ name, value }) => <p>{name} {value}</p>;
+const Statistic = ({ name, value, unit }) => <p>{name} {value} {unit}</p>;
 
 const App = () => {
 
