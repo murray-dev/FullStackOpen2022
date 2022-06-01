@@ -1,50 +1,31 @@
-const Header = ({ course }) => {
-  return (
-    <>
-      <h1>{course}</h1>
-    </>
-  )
-}
+const Header = ({ course }) => <h1>{course}</h1>;
 
-const Content = ({ parts }) => {
-  return (
-    <>
-      {parts.map((part) => <Part part={part} key={part.id} />)}
-    </>
-  )
-}
+const Content = ({ parts }) => (
+  <>
+    {parts.map((part) => <Part part={part} key={part.id} />)}
+  </>
+);
 
-const Part = ({ part }) => {
-  return (
-    <>
-      <p>
-        {part.name} {part.exercises}
-      </p>
-    </>
-  )
-}
+const Part = ({ part }) => <p>{part.name} {part.exercises}</p>;
 
 const Total = ({ parts }) => {
 
-  let sum = 0;
-  parts.forEach((part) => sum += part.exercises)
+  const sum = parts.reduce((sum, part) => sum + part.exercises, 0);
 
   return (
     <>
       <p><strong>total of {sum} exercises</strong></p>
     </>
   )
-}
+};
 
-const Course = ({ course }) => {
-  return (
-    <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
-    </div>
-  )
-}
+const Course = ({ course }) => (
+  <div>
+    <Header course={course.name} />
+    <Content parts={course.parts} />
+    <Total parts={course.parts} />
+  </div>
+);
 
 const App = () => {
   const course = {
@@ -74,7 +55,7 @@ const App = () => {
     ]
   };
 
-  return <Course course={course} />
+  return <Course course={course} />;
 }
 
 export default App;
