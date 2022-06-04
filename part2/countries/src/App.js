@@ -13,14 +13,17 @@ const App = () => {
     c => c.name.common.toLowerCase().includes(filter.toLowerCase())
   )
 
+  const maxCountries = 10
+  const showCountryDetails = filteredCountries.length === 1
+  const showCountryList =
+    filteredCountries.length > 1 && filteredCountries.length <= maxCountries
+
+  const handleShowCountry = (countryName) => setFilter(countryName)
+
   const hookGetCountries = () => {
     axios
       .get("https://restcountries.com/v3.1/all")
       .then((response) => setCountries(response.data))
-  }
-
-  const showCountry = (countryName) => {
-    setFilter(countryName)
   }
 
   useEffect(hookGetCountries, [])
@@ -28,8 +31,15 @@ const App = () => {
   return (
     <div>
       <CountryFilter filter={filter} setFilter={setFilter} />
-      <CountryList countries={filteredCountries} showCountry={showCountry} />
-      <CountryDetails countries={filteredCountries} />
+      {showCountryList &&
+        <CountryList
+          countries={filteredCountries}
+          handleShowCountry={handleShowCountry}
+        />}
+      {filteredCountries.length > maxCountries &&
+        <p>Too many matches, specify another filter</p>}
+      {showCountryDetails &&
+        <CountryDetails country={filteredCountries[0]} />}
     </div>
   );
 }
