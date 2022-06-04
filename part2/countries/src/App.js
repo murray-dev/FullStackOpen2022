@@ -19,12 +19,16 @@ const App = () => {
       .then((response) => setCountries(response.data))
   }
 
+  const showCountry = (countryName) => {
+    setFilter(countryName)
+  }
+
   useEffect(hookGetCountries, [])
 
   return (
     <div>
       <CountryFilter filter={filter} setFilter={setFilter} />
-      <CountryList countries={filteredCountries} />
+      <CountryList countries={filteredCountries} showCountry={showCountry} />
       <CountryDetails countries={filteredCountries} />
     </div>
   );
