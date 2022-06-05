@@ -4,13 +4,14 @@ import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import personsService from './services/persons'
-import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
   const [filterName, setFilterName] = useState('')
+
+  const filteredPersons =
+    persons.filter(
+      (x) => x.name.toLowerCase().includes(filterName.toLowerCase()))
 
   const hookGetPersons = () => {
     personsService
@@ -18,61 +19,49 @@ const App = () => {
       .then((initialPersons) => setPersons(initialPersons))
   }
 
-  useEffect(hookGetPersons, [])
+  const isContact = (name) =>
+    persons.map((person) => person.name).includes(name)
 
-  const handleNameChange = (event) => setNewName(event.target.value)
-  const handleNumberChange = (event) => setNewNumber(event.target.value)
-  const handleFilterChange = (event) => setFilterName(event.target.value)
-
-  const clearForm = () => {
-    setNewName('')
-    setNewNumber('')
-  }
-
-  const addContact = (event) => {
-    event.preventDefault()
-
-    if (persons.map((x) => x.name).includes(newName)) {
-      alert(`${newName} is already added to phonebook`)
-      clearForm()
-      return
-    }
-
-    const newContact = {
-      name: newName,
-      number: newNumber,
-    }
-
+  const addContact = (newPerson) =>
     personsService
-      .add(newContact)
+      .add(newPerson)
       .then(addedContact => {
         setPersons(persons.concat(addedContact))
-        clearForm()
-      })  
-    
-  }
+      })
+
+  const removeContact = (person) =>
+    personsService
+      .remove(person.id)
+      .then(response => setPersons(
+        persons.filter(p => p.id !== person.id)
+      ))
+      .catch((error) => {
+        error.response.status === 404
+          ? persons.filter(p => p.id !== person.id)
+          : alert(`Error removing contact '${person.name}'`)
+      })
+
+  useEffect(hookGetPersons, [])
 
   return (
     <div>
       <h2>Phonebook</h2>
       <Filter
         filterName={filterName}
-        handleFilterChange={handleFilterChange}
+        setFilterName={setFilterName}
       />
 
       <h2>add a new</h2>
       <PersonForm
         addContact={addContact}
-        newName={newName}
-        handleNameChange={handleNameChange}
-        newNumber={newNumber}
-        handleNumberChange={handleNumberChange}
+        isContact={isContact}
       />
 
       <h2>Numbers</h2>
       <Persons
-        persons={persons
-          .filter((x) => x.name.toLowerCase().includes(filterName.toLowerCase()))} />
+        persons={filteredPersons}
+        removePerson={removeContact}
+      />
     </div>
   )
 }

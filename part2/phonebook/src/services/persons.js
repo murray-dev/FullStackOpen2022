@@ -10,4 +10,9 @@ const add = (newContact) =>
         .post(`http://localhost:3001/persons`, newContact)
         .then(response => response.data)
 
-export default { getAll, add }
+const remove = (id) =>
+    axio
+        .delete(`http://localhost:3001/persons/${id}`)
+
+
+export default { getAll, add, remove }

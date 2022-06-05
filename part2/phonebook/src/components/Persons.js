@@ -1,12 +1,26 @@
-const Person = ({ name, number }) => <p>{name} {number}</p>
+const Person = ({ name, number, removePerson }) => {
+    const handleDelete = () => {
+        if (window.confirm(`Delete '${name}'?`)) {
+            removePerson()
+        }
+    }
+    return (
+        <p>
+            {name} {number}
+            <button onClick={handleDelete}>delete</button>
+        </p >
+    )
+}
 
-const Persons = ({ persons }) => (
+const Persons = ({ persons, removePerson }) => (
     <>
         {persons.map(p =>
             <Person
-                key={p.name}
+                key={p.id}
                 name={p.name}
-                number={p.number} />
+                number={p.number}
+                removePerson={() => removePerson(p)}
+            />
         )}
     </>
 )
