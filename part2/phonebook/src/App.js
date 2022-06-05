@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
+
 import personsService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filterName, setFilterName] = useState('')
+  const [message, setMessage] = useState(null)
 
   const filteredPersons =
     persons.filter(
@@ -27,18 +30,23 @@ const App = () => {
       .add(newPerson)
       .then(addedContact => {
         setPersons(persons.concat(addedContact))
+        setMessage(`Added ${addedContact.name}`)
+        setTimeout(() => setMessage(null), 3000)
       })
 
   const removeContact = (person) =>
     personsService
       .remove(person.id)
-      .then(response => setPersons(
-        persons.filter(p => p.id !== person.id)
-      ))
+      .then(response => {
+        setPersons(persons.filter(p => p.id !== person.id))
+        setMessage(`Removed ${person.name}`)
+        setTimeout(() => setMessage(null), 3000)
+      })
       .catch((error) => {
         error.response.status === 404
           ? persons.filter(p => p.id !== person.id)
-          : alert(`Error removing contact '${person.name}'`)
+          : setMessage(`Error removing contact '${person.name}'`)
+        setTimeout(() => setMessage(null), 3000)
       })
 
 
@@ -49,9 +57,12 @@ const App = () => {
 
     return personsService
       .update(changedPerson.id, changedPerson)
-      .then(setPersons(persons.map(p =>
-        p.id !== changedPerson.id ? p : changedPerson)
-      ))
+      .then(changedPerson => {
+        setPersons(persons.map(p =>
+          p.id !== changedPerson.id ? p : changedPerson))
+        setMessage(`Updated info for ${changedPerson.name}`)
+        setTimeout(() => setMessage(null), 3000)
+      })
   }
 
   useEffect(hookGetPersons, [])
@@ -59,6 +70,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter
         filterName={filterName}
         setFilterName={setFilterName}
