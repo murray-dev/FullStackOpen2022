@@ -12,6 +12,11 @@ const App = () => {
   const [filterName, setFilterName] = useState('')
   const [message, setMessage] = useState(null)
 
+  const displayMessage = (message, messageType) => {
+    setMessage({message, messageType})
+    setTimeout(() => setMessage(null), 3000)
+  }
+
   const filteredPersons =
     persons.filter(
       (x) => x.name.toLowerCase().includes(filterName.toLowerCase()))
@@ -30,8 +35,7 @@ const App = () => {
       .add(newPerson)
       .then(addedContact => {
         setPersons(persons.concat(addedContact))
-        setMessage(`Added ${addedContact.name}`)
-        setTimeout(() => setMessage(null), 3000)
+        displayMessage(`Added ${addedContact.name}`, 'confirm')
       })
 
   const removeContact = (person) =>
@@ -39,14 +43,12 @@ const App = () => {
       .remove(person.id)
       .then(response => {
         setPersons(persons.filter(p => p.id !== person.id))
-        setMessage(`Removed ${person.name}`)
-        setTimeout(() => setMessage(null), 3000)
+        displayMessage(`Removed ${person.name}`, 'confirm')
       })
       .catch((error) => {
-        error.response.status === 404
-          ? persons.filter(p => p.id !== person.id)
-          : setMessage(`Error removing contact '${person.name}'`)
-        setTimeout(() => setMessage(null), 3000)
+        displayMessage(`'${person.name}' does not exist on server`,
+          'error')
+        setPersons(persons.filter(p => p.id !== person.id))
       })
 
 
@@ -60,8 +62,12 @@ const App = () => {
       .then(changedPerson => {
         setPersons(persons.map(p =>
           p.id !== changedPerson.id ? p : changedPerson))
-        setMessage(`Updated info for ${changedPerson.name}`)
-        setTimeout(() => setMessage(null), 3000)
+        displayMessage(`Updated info for ${changedPerson.name}`, 'confirm')
+      })
+      .catch(error => {
+        displayMessage(`${changedPerson.name} does not exist on server`,
+          'error')
+        removeContact(changedPerson)
       })
   }
 
