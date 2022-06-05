@@ -41,6 +41,19 @@ const App = () => {
           : alert(`Error removing contact '${person.name}'`)
       })
 
+
+  const updateContact = (newPerson) => {
+
+    const person = persons.find(p => p.name === newPerson.name)
+    const changedPerson = { ...person, 'number': newPerson.number }
+
+    return personsService
+      .update(changedPerson.id, changedPerson)
+      .then(setPersons(persons.map(p =>
+        p.id !== changedPerson.id ? p : changedPerson)
+      ))
+  }
+
   useEffect(hookGetPersons, [])
 
   return (
@@ -54,6 +67,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm
         addContact={addContact}
+        updateContact={updateContact}
         isContact={isContact}
       />
 

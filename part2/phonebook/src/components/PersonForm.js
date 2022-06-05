@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const PersonForm = ({ addContact, isContact }) => {
+const PersonForm = ({ addContact, updateContact, isContact }) => {
 
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -9,19 +9,20 @@ const PersonForm = ({ addContact, isContact }) => {
     const handleNumberChange = (event) => setNewNumber(event.target.value)
     const handleAddContact = (event) => {
         event.preventDefault()
-        if (isContact(newName)) {
-            alert(`${newName} is already added to phonebook`)
-            clearForm()
-            return
-        }
-
         const newContact = {
             name: newName,
             number: newNumber,
         }
 
-        addContact(newContact)
-            .then(clearForm())
+        if (isContact(newName)) {
+            window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+                && updateContact(newContact).then(clearForm())
+
+            clearForm()
+            return
+        }
+
+        addContact(newContact).then(clearForm())
     }
 
     const clearForm = () => {

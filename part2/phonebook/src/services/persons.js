@@ -14,5 +14,9 @@ const remove = (id) =>
     axio
         .delete(`http://localhost:3001/persons/${id}`)
 
+const update = (id, contact) =>
+    axio
+        .put(`http://localhost:3001/persons/${id}`, contact)
+        .then(response => response.data)
 
-export default { getAll, add, remove }
+export default { getAll, add, remove, update }
