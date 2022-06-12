@@ -1,0 +1,34 @@
+GET https://murraydev-phonebook.herokuapp.com/api/persons
+
+###
+HEAD https://murraydev-phonebook.herokuapp.com/api/persons
+
+###
+GET https://murraydev-phonebook.herokuapp.com/api/persons/1
+
+###
+GET https://murraydev-phonebook.herokuapp.com/api/persons/0
+
+###
+DELETE https://murraydev-phonebook.herokuapp.com/api/persons/1
+
+###
+POST https://murraydev-phonebook.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John Smith",
+    "number" : "123-456789"
+}
+
+###
+POST https://murraydev-phonebook.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name" : "J",
+    "number" : ""
+}
+
+###
+GET https://murraydev-phonebook.herokuapp.com/api/unknown
