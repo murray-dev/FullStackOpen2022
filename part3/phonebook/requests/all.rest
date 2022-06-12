@@ -1,6 +1,9 @@
 GET http://localhost:3001/api/persons
 
 ###
+HEAD http://localhost:3001/api/persons
+
+###
 GET http://localhost:3001/api/persons/1
 
 ###
@@ -26,3 +29,6 @@ Content-Type: application/json
     "name" : "J",
     "number" : ""
 }
+
+###
+GET http://localhost:3001/api/unknown
