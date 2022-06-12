@@ -4,7 +4,10 @@ const morgan = require("morgan");
 const app = express();
 
 app.use(express.json());
-app.use(morgan('tiny'));
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+);
 
 let persons = [
   {
@@ -85,7 +88,7 @@ app.post('/api/persons', (request, response) => {
 });
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({error: 'unknown endpoint'});
+  response.status(404).send({ error: 'unknown endpoint' });
 }
 app.use(unknownEndpoint);
 
