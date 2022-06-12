@@ -3,6 +3,7 @@ const morgan = require("morgan");
 
 const app = express();
 
+app.use(express.static('build'));
 app.use(express.json());
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(
@@ -67,13 +68,13 @@ app.post('/api/persons', (request, response) => {
   if (!body.name || !body.number) {
     return response.status(400).json({
       error: 'name or number missing'
-    })
+    });
   }
 
   if (persons.find(p => p.name === body.name)) {
     return response.status(400).json({
       error: 'name must be unique'
-    })
+    });
   }
 
   const person = {
@@ -86,11 +87,6 @@ app.post('/api/persons', (request, response) => {
 
   response.json(person);
 });
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' });
-}
-app.use(unknownEndpoint);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

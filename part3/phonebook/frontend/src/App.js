@@ -37,6 +37,9 @@ const App = () => {
         setPersons(persons.concat(addedContact))
         displayMessage(`Added ${addedContact.name}`, 'confirm')
       })
+      .catch((error) => {
+        displayMessage(`'Error: ${error.response.data.error}'`, 'error')
+      })
 
   const removeContact = (person) =>
     personsService
