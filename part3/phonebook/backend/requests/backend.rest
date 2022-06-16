@@ -1,19 +1,19 @@
-GET https://murraydev-phonebook.herokuapp.com/api/persons
+GET http://localhost:3001/api/persons
 
 ###
-HEAD https://murraydev-phonebook.herokuapp.com/api/persons
+HEAD http://localhost:3001/api/persons
 
 ###
-GET https://murraydev-phonebook.herokuapp.com/api/persons/1
+GET http://localhost:3001/api/persons/1
 
 ###
-GET https://murraydev-phonebook.herokuapp.com/api/persons/0
+GET http://localhost:3001/api/persons/0
 
 ###
-DELETE https://murraydev-phonebook.herokuapp.com/api/persons/1
+DELETE http://localhost:3001/api/persons/1
 
 ###
-POST https://murraydev-phonebook.herokuapp.com/api/persons
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ###
-POST https://murraydev-phonebook.herokuapp.com/api/persons
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
@@ -31,4 +31,4 @@ Content-Type: application/json
 }
 
 ###
-GET https://murraydev-phonebook.herokuapp.com/api/unknown
+GET http://localhost:3001/api/persons
