@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const { default: mongoose } = require("mongoose");
 const morgan = require("morgan");
 const Person = require("./models/person");
 
@@ -11,13 +12,6 @@ morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 );
-
-app.get('/info', (request, response) => {
-  response.send(
-    `<p>Phonebook has info for ${persons.length} people</p>
-    <p>${Date()}</p>`
-  );
-});
 
 app.get('/api/persons', (request, response) =>
   Person.find({}).then(persons => response.json(persons))
@@ -45,21 +39,12 @@ app.post('/api/persons', (request, response) => {
     });
   }
 
-  if (persons.find(p => p.name === body.name)) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    });
-  }
-
-  const person = {
+  const person = Person({
     name: body.name,
     number: body.number,
-    id: Math.floor(Math.random() * 10 ** 12)
-  }
+  });
 
-  persons = persons.concat(person);
-
-  response.json(person);
+  person.save().then(savedPerson => response.json(savedPerson));
 });
 
 const PORT = process.env.PORT || 3001;
