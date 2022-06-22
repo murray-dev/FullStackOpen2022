@@ -11,7 +11,10 @@ GET http://localhost:3001/api/persons/62aba3d938ad5f367c5a03d1
 GET http://localhost:3001/api/persons/0
 
 ### Delete a person
-DELETE http://localhost:3001/api/persons/62b342aa6fa53206f70a1314
+DELETE http://localhost:3001/api/persons/62b3984bf041f20f6ad0a264
+
+### Delete a person, with invalid id
+DELETE http://localhost:3001/api/persons/62b342aa6f3206f70a1314
 
 ### Add a person
 POST http://localhost:3001/api/persons
@@ -22,7 +25,7 @@ Content-Type: application/json
     "number" : "123-456789"
 }
 
-###
+### Add a person, but with missing data
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
@@ -30,6 +33,3 @@ Content-Type: application/json
     "name" : "J",
     "number" : ""
 }
-
-###
-GET http://localhost:3001/api/persons
