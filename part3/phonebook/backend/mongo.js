@@ -67,4 +67,3 @@ if (params.length === 0) {
     displayUsageInfo();
     process.exit(1)
 }
-

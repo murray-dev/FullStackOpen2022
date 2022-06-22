@@ -1,12 +1,13 @@
+### Get all persons
 GET http://localhost:3001/api/persons
-
-###
+ 
+### Get all persons as HEAD request
 HEAD http://localhost:3001/api/persons
 
-###
-GET http://localhost:3001/api/persons/1
+### Get person that exists
+GET http://localhost:3001/api/persons/62aba3d938ad5f367c5a03d1
 
-###
+### Get person that doesn't exist
 GET http://localhost:3001/api/persons/0
 
 ###
