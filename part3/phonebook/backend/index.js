@@ -14,6 +14,17 @@ app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 );
 
+app.get('/info', (request, response) => {
+  Person.estimatedDocumentCount()
+    .then(length =>
+      response.send(
+        `<p>Phonebook has info for ${length} people</p>
+        <p>${Date()}</p>`
+      )
+    )
+    .catch(error => next(error));
+});
+
 app.get('/api/persons', (request, response, next) =>
   Person.find({})
     .then(persons => response.json(persons))
