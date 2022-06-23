@@ -33,3 +33,11 @@ Content-Type: application/json
     "name" : "J",
     "number" : ""
 }
+
+### Update phone number of person
+PUT http://localhost:3001/api/persons/62b49a46f394932262a93ac3
+Content-Type: application/json
+
+{
+    "number" : "999"
+}
