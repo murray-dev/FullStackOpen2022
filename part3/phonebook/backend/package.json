@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build ../backend",
-    "deploy": "cd ../../../ && git subtree push --prefix part3/phonebook/backend heroku main",
+    "deploy": "cd ../../../ && git push heroku `git subtree split --prefix part3/phonebook/backend part3`:main --force",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
