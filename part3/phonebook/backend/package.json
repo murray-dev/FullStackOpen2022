@@ -10,7 +10,8 @@
     "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build ../backend",
     "deploy": "cd ../../../ && git push heroku `git subtree split --prefix part3/phonebook/backend part3`:main --force",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "author": "Ryan Murray",
   "license": "MIT",
@@ -21,6 +22,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.18.0",
     "nodemon": "^2.0.16"
   }
 }
