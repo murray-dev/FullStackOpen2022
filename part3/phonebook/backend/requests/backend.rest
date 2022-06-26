@@ -1,0 +1,87 @@
+### Get all persons
+GET http://localhost:3001/api/persons
+ 
+### Get all persons as HEAD request
+HEAD http://localhost:3001/api/persons
+
+### Get person that exists
+GET http://localhost:3001/api/persons/62aba3d938ad5f367c5a03d1
+
+### Get person that doesn't exist
+GET http://localhost:3001/api/persons/0
+
+### Delete a person
+DELETE http://localhost:3001/api/persons/62b3984bf041f20f6ad0a264
+
+### Delete a person, with invalid id
+DELETE http://localhost:3001/api/persons/62b342aa6f3206f70a1314
+
+### Add a person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John Smith",
+    "number" : "123-456789"
+}
+
+### Add a person, but with missing data
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John",
+    "number" : ""
+}
+
+### Add a person, but with invalid phone number
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John",
+    "number" : "1234-456789"
+}
+
+### Add a person that already exists
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John Smith",
+    "number" : "123-456789"
+}
+
+### Update phone number of person
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
+Content-Type: application/json
+
+{
+    "number" : "999888"
+}
+
+### Update persons number, but with wrong data
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
+Content-Type: application/json
+
+{
+    "number" : null
+}
+
+### Update persons number, but with missing data
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
+Content-Type: application/json
+
+{}
+
+### Update person with bad id
+PUT http://localhost:3001/api/persons/badid
+Content-Type: application/json
+
+{}
+
+### Update persons with id that doesn't exist
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6999
+Content-Type: application/json
+
+{}
