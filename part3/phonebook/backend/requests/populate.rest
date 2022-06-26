@@ -1,0 +1,26 @@
+### Populate with dummy data
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "Ryan",
+    "number" : "123-456789"
+}
+
+### Populate with dummy data
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "Myranda",
+    "number" : "183-4587889"
+}
+
+### Populate with dummy data
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "Lady",
+    "number" : "12-8979489"
+}

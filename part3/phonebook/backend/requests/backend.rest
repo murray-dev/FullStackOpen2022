@@ -34,6 +34,24 @@ Content-Type: application/json
     "number" : ""
 }
 
+### Add a person, but with invalid phone number
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John",
+    "number" : "1234-456789"
+}
+
+### Add a person that already exists
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name" : "John Smith",
+    "number" : "123-456789"
+}
+
 ### Update phone number of person
 PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
 Content-Type: application/json

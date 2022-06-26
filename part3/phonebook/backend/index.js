@@ -86,6 +86,8 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: "Invalid id" });
   } else if (error.name === "ValidationError") {
     return response.status(400).send({ error: error.message });
+  } else if (error.name === "MongoServerError" && error.code === 11000) {
+    return response.status(400).send({ error: "Person already exists." });
   }
 
   next(error);

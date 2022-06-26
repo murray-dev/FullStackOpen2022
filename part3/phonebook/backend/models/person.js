@@ -13,10 +13,15 @@ const personSchema = mongoose.Schema({
     type: String,
     minLength: 3,
     required: true,
+    unique: true,
   },
   number: {
     type: String,
+    minLength: 8,
     required: true,
+    validate: {
+      validator: number => /^\d{2,3}-\d+/.test(number)
+    }
   },
 });
 
@@ -28,4 +33,7 @@ personSchema.set('toJSON', {
   }
 });
 
-module.exports = mongoose.model("Person", personSchema);
+const Person = mongoose.model("Person", personSchema);
+Person.init().catch(e => console.log(e.message));
+
+module.exports = Person;

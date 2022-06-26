@@ -13,7 +13,7 @@ const App = () => {
   const [message, setMessage] = useState(null)
 
   const displayMessage = (message, messageType) => {
-    setMessage({message, messageType})
+    setMessage({ message, messageType })
     setTimeout(() => setMessage(null), 3000)
   }
 
@@ -68,9 +68,7 @@ const App = () => {
         displayMessage(`Updated info for ${changedPerson.name}`, 'confirm')
       })
       .catch(error => {
-        displayMessage(`${changedPerson.name} does not exist on server`,
-          'error')
-        removeContact(changedPerson)
+        displayMessage(`'Error: ${error.response.data.error}'`, 'error')
       })
   }
 
