@@ -9,8 +9,15 @@ mongoose.connect(url)
   .catch(e => console.log("Could not connect to MongoDB: ", e));
 
 const personSchema = mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minLength: 3,
+    required: true,
+  },
+  number: {
+    type: String,
+    required: true,
+  },
 });
 
 personSchema.set('toJSON', {

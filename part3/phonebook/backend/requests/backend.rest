@@ -30,14 +30,40 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name" : "J",
+    "name" : "John",
     "number" : ""
 }
 
 ### Update phone number of person
-PUT http://localhost:3001/api/persons/62b49a46f394932262a93ac3
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
 Content-Type: application/json
 
 {
-    "number" : "999"
+    "number" : "999888"
 }
+
+### Update persons number, but with wrong data
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
+Content-Type: application/json
+
+{
+    "number" : null
+}
+
+### Update persons number, but with missing data
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6de8
+Content-Type: application/json
+
+{}
+
+### Update person with bad id
+PUT http://localhost:3001/api/persons/badid
+Content-Type: application/json
+
+{}
+
+### Update persons with id that doesn't exist
+PUT http://localhost:3001/api/persons/62b3879745eba6fd666b6999
+Content-Type: application/json
+
+{}

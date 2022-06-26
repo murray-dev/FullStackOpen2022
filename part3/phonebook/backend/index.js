@@ -52,12 +52,6 @@ app.delete('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: 'name or number missing'
-    });
-  }
-
   const person = Person({
     name: body.name,
     number: body.number,
@@ -69,14 +63,15 @@ app.post('/api/persons', (request, response, next) => {
 });
 
 app.put('/api/persons/:id', (request, response, next) => {
-  const body = request.body;
 
-  const person = { number: body.number };
-
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
-    .then(updatedPerson => {
-      if (updatedPerson) {
-        response.json(updatedPerson);
+  Person.findById(request.params.id)
+    .then((person) => {
+      if (person) {
+        const { number } = request.body;
+        person.number = number;
+        person.save()
+          .then(updatedPerson => response.json(updatedPerson))
+          .catch(error => next(error));
       } else {
         response.status(404).end();
       }
@@ -89,6 +84,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "Invalid id" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).send({ error: error.message });
   }
 
   next(error);
